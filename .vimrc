@@ -1,5 +1,5 @@
 set number
-set tabstop=4
+set tabstop=2
 
 syntax on
 filetype plugin indent on
@@ -7,7 +7,7 @@ filetype plugin indent on
 let s:jetpackfile = expand('<sfile>:p:h') .. '/pack/jetpack/opt/vim-jetpack/plugin/jetpack.vim'
 let s:jetpackurl = "https://raw.githubusercontent.com/tani/vim-jetpack/master/plugin/jetpack.vim"
 if !filereadable(s:jetpackfile)
-        call system(printf('curl -fsSLo %s --create-dirs %s', s:jetpackfile, s:jetpackurl))
+	call system(printf('curl -fsSLo %s --create-dirs %s', s:jetpackfile, s:jetpackurl))
 endif
 
 packadd vim-jetpack
@@ -18,6 +18,7 @@ call jetpack#begin()
 	Jetpack 'lambdalisue/fern-git-status.vim'
 	Jetpack 'liuchengxu/vim-which-key'
 	Jetpack 'skanehira/preview-markdown.vim'
+	Jetpack 'airblade/vim-gitgutter'
 
 call jetpack#end()
 
@@ -70,4 +71,11 @@ augroup my-fern-startup
 	autocmd! *
 	autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR>
 augroup END
+
+" git-gutter
+highlight SignColumn ctermbg=black
+highlight GitGutterAdd cterm=reverse ctermfg=blue ctermbg=black
+highlight GitGutterChangeLine cterm=reverse ctermfg=green ctermbg=black
+highlight GitGutterDeleteLine cterm=bold ctermfg=red ctermbg=black
+highlight GitGutterChangeDeleteLine cterm=bold  ctermfg=yellow ctermbg=black
 
