@@ -139,16 +139,6 @@ function showUnpushedChanges() {
     echo "this branch is not pushed"
     return 0
   fi
-  # contains $branches master
-  # isContain="$?"
-  # if [ "$isContain" -eq 0 ]; then
-  #   command git diff -w --stat master
-  # fi
-  # contains $branches main
-  # isContain="$?"
-  # if [ "$isContain" -eq 0]; then
-  #   command git diff -w --stat main
-  # fi
   return 1
 }
 function git() {
@@ -165,11 +155,6 @@ function git() {
     fi
   fi
   if [ "$1" = "commit" ]; then
-    echo "need static_checks? (y/N)"
-    if read -q; then
-      command yarn lint --fix --quiet
-      command yarn eslint --fix --quiet
-    fi
     command git "$@"
     if [[ "$?" == 0 ]]; then
       showUnpushedChanges
