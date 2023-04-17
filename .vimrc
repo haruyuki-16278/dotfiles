@@ -51,10 +51,12 @@ call jetpack#begin()
   Jetpack 'liuchengxu/vim-which-key'
   Jetpack 'skanehira/preview-markdown.vim'
   Jetpack 'airblade/vim-gitgutter'
+  Jetpack 'vim-airline/vim-airline'
+  Jetpack 'vim-airline/vim-airline-themes'
 
 call jetpack#end()
 
-" which key
+""" which key
 " By default timeout len is 1000 ms
 set timeoutlen=500
 
@@ -96,7 +98,10 @@ augroup END
 " Register which key map
 call which_key#register('<Space>', "g:which_key_map")
 
-" fern
+""" airline
+let g:airline#extensions#tabline#enabled = 1
+
+""" fern
 let g:fern#default_hidden=1
 nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
 augroup my-fern-startup
@@ -104,15 +109,14 @@ augroup my-fern-startup
 	autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR> | winc p
 augroup END
 
-" git-gutter
+""" git-gutter
 set updatetime=250
 highlight! link SignColumn LineNr
 set signcolumn=yes
 let g:gitgutter_override_sign_column_highlight = 0
 highlight SignColumn ctermbg=0
 highlight GitGutterAdd ctermbg=1
-highlight GitGutterChangeLine ctermbg=2
-highlight GitGutterDeleteLine ctermbg=4
-highlight GitGutterChangeDeleteLine ctermbg=6
+highlight GitGutterChange ctermbg=2
+highlight GitGutterDelete ctermbg=4
 let g:gitgutter_sign_modified = 'M'
 
