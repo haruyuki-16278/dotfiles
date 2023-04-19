@@ -107,7 +107,7 @@ let g:fern#default_hidden=1
 nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
 augroup my-fern-startup
   autocmd! *
-	autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR> | winc p
+  autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR> | winc p
 augroup END
 
 """ git-gutter
