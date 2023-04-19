@@ -100,6 +100,7 @@ call which_key#register('<Space>', "g:which_key_map")
 
 """ airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_highlighting_cache=1
 
 """ fern
 let g:fern#default_hidden=1
