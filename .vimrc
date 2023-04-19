@@ -53,6 +53,12 @@ call jetpack#begin()
   Jetpack 'airblade/vim-gitgutter'
   Jetpack 'vim-airline/vim-airline'
   Jetpack 'vim-airline/vim-airline-themes'
+  Jetpack 'prabirshrestha/vim-lsp'
+  Jetpack 'mattn/vim-lsp-settings'
+  Jetpack 'prabirshrestha/asyncomplete.vim'
+  Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
+  Jetpack 'Shougo/ddc.vim'
+  Jetpack 'shun/ddc-vim-lsp'
 
 call jetpack#end()
 
