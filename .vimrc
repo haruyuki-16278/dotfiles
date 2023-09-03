@@ -59,6 +59,7 @@ call jetpack#begin()
   Jetpack 'prabirshrestha/asyncomplete-lsp.vim'
   Jetpack 'Shougo/ddc.vim'
   Jetpack 'shun/ddc-vim-lsp'
+  Jetpack 'alvan/vim-closetag'
 
 call jetpack#end()
 
@@ -126,4 +127,7 @@ highlight GitGutterAdd ctermbg=1
 highlight GitGutterChange ctermbg=2
 highlight GitGutterDelete ctermbg=4
 let g:gitgutter_sign_modified = 'M'
+
+""" closetag
+let g:closetag_filenames = '*.html'
 

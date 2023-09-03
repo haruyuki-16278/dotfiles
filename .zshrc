@@ -54,6 +54,18 @@ export PATH="$HOME/dev/flutter/bin:$PATH"
 # java
 export PATH="/opt/android-studio/jre/bin:$PATH"
 
+# arduino ide
+export PATH="$HOME/arduino/:$PATH"
+
+# fritzing
+export PATH="$HOME/.fritzing/:$PATH"
+
+# RL78
+export PATH="$HOME/rl78/linux-x64/:$PATH"
+
+# dotnet
+export PATH="$HOME/.dotnet/:$PATH"
+
 # mdr (markdown renderer)
 # alias mdr="~/.mdr/mdr_linux_amd64"
 export PATH="$HOME/.mdr:$PATH"
@@ -223,3 +235,7 @@ if [[ ! -n $TMUX && $- == *l* ]]; then
   fi
 fi
 
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
