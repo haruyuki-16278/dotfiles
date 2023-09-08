@@ -17,7 +17,10 @@ set incsearch
 set wrapscan
 set hlsearch
 
+set autoindent
+set expandtab
 set tabstop=2
+set shiftwidth=2
 set smartindent
 set expandtab
 
@@ -63,6 +66,13 @@ call jetpack#begin()
 
 call jetpack#end()
 
+for name in jetpack#names()
+  if !jetpack#tap(name)
+    call jetpack#sync()
+    break
+  endif
+endfor
+
 """ which key
 " By default timeout len is 1000 ms
 set timeoutlen=500
@@ -101,7 +111,6 @@ augroup vim-which-key
   autocmd!
   autocmd FileType which_key set laststatus=0 noshowmode noruler
 augroup END
-
 " Register which key map
 call which_key#register('<Space>', "g:which_key_map")
 

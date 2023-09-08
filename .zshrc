@@ -214,7 +214,7 @@ function adbshot() {
 alias grep="grep -n "
 alias wget="curl -O "
 
-alias browsh="docker run -it --rm browsh/browsh"
+alias browsh="docker run -it --net=host --rm browsh/browsh"
 
 # start tmux
 if [[ ! -n $TMUX && $- == *l* ]]; then
