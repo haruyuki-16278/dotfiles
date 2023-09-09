@@ -63,6 +63,10 @@ call jetpack#begin()
   Jetpack 'Shougo/ddc.vim'
   Jetpack 'shun/ddc-vim-lsp'
   Jetpack 'alvan/vim-closetag'
+  Jetpack 'junegunn/fzf'
+  Jetpack 'junegunn/fzf.vim'
+  Jetpack 'tpope/vim-fugitive'
+  Jetpack 'leafgarland/typescript-vim'
 
 call jetpack#end()
 
@@ -72,6 +76,12 @@ for name in jetpack#names()
     break
   endif
 endfor
+
+" typescript settings
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 """ which key
 " By default timeout len is 1000 ms
@@ -92,15 +102,22 @@ let g:which_key_map['v'] = [ '<C-w>v', 'split right' ]
 let g:which_key_map['w'] = [ '<C-w>w', 'next pane' ]
 let g:which_key_map['ns'] = [ ':new', 'new file in split below' ]
 let g:which_key_map['nv'] = [ ':vnew', 'new file in split right' ]
+let g:which_key_map['g'] = [ ':Git', 'open git status' ]
 
 let g:which_key_map.t = {
   \ 'name': '+tab',
-  \ 'e' : [ '<C-w>gf', 'edit in new tab' ],
-  \ 'new' : [ ':tabnew', 'open in new tab'],
-  \ 'n' : [ ':tabn', 'move to next tab'],
-  \ 'p' : [ ':tabp', 'move to previous tab'],
-  \ 'c' : [ ':tabclose', 'close tab'],
-  \ 'ls'  : [ ':tabs', 'list tab'],
+  \ 'e': [ '<C-w>gf', 'edit in new tab' ],
+  \ 'new': [ ':tabnew', 'open in new tab'],
+  \ 'n': [ ':tabn', 'move to next tab'],
+  \ 'p': [ ':tabp', 'move to previous tab'],
+  \ 'c': [ ':tabclose', 'close tab'],
+  \ 'ls': [ ':tabs', 'list tab'],
+  \ }
+
+let g:which_key_map.f = {
+  \ 'name': 'fzf',
+  \ 'f': [ 'fzf#vim#files("./")', 'open file browser' ],
+  \ 'b': [ 'fzf#vim#buffers()', 'open buffer browser' ],
   \ }
 
 " Not a fan of floating windows for this
@@ -121,10 +138,10 @@ let g:airline_highlighting_cache=1
 """ fern
 let g:fern#default_hidden=1
 nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=40<CR>
-augroup my-fern-startup
-  autocmd! *
-  autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR> | winc p
-augroup END
+"augroup my-fern-startup
+"  autocmd! *
+"  autocmd VimEnter * ++nested Fern . -reveal=% -drawer -width=40<CR> | winc p
+"augroup END
 
 """ git-gutter
 set updatetime=250
