@@ -66,9 +66,18 @@ export PATH="$HOME/rl78/linux-x64/:$PATH"
 # dotnet
 export PATH="$HOME/.dotnet/:$PATH"
 
+# inkscape
+export PATH="$HOME/.inkscape/:$PATH"
+
+# pandoc filter
+export PATH="$HOME/.local/share/pandoc/filter:$PATH"
+
 # mdr (markdown renderer)
 # alias mdr="~/.mdr/mdr_linux_amd64"
 export PATH="$HOME/.mdr:$PATH"
+
+# lua
+export PATH="$HOME/lua-5.4.6/src:$PATH"
 
 # prompt
 setopt Prompt_SUBST
@@ -211,7 +220,7 @@ function adbshot() {
 }
 
 # other alias
-alias grep="grep -n "
+# alias grep="grep -n "
 alias wget="curl -O "
 
 alias browsh="docker run -it --net=host --rm browsh/browsh"
