@@ -30,19 +30,23 @@ function nowbranch() {
 alias lrc="source ~/.zshrc"
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$PYENV_ROOT/shims:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+if [ -d "$HOME/.pyenv" ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  export PATH="$PYENV_ROOT/shims:$PATH"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
 fi
 
-# nvm path
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -d "$HOME/.config/nvm" ]; then
+  # nvm path
+  export NVM_DIR="$HOME/.config/nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-nvm use default > /dev/null
+  nvm use default > /dev/null
+fi
 
 # pnpm setting
 export PNPM_HOME="/home/haruyuki/.local/share/pnpm"
@@ -95,9 +99,18 @@ export ANDROID_HOME="/home/haruyuki/Android/Sdk"
 # prompt
 setopt Prompt_SUBST
 PROMPT='
-%F{magenta}python:$(pyenv version-name)@~${${${$(which python3)#*$(whoami)}%shims*}%/bin*}%f  %F{magenta}node:$(node -v)%f
 %F{green}%n%f@%F{green}%m%f %F{yellow}%* %w%f %~%F{blue}$(nowbranch)%f
 %F{cyan}%#%f '
+if command -v node > /dev/null 2>&1; then
+  PROMPT='
+  %F{magenta}node:$(node -v)%f
+  $PROMPT'
+fi
+if command -v pyenv > /dev/null 2>&1; then
+  PROMPT='
+  %F{magenta}python:$(pyenv version-name)@~${${${$(which python3)#*$(whoami)}%shims*}%/bin*}%f
+  $PROMPT'
+fi
 TMOUT=1
 
 TRAPALRM() {
@@ -136,8 +149,10 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 # thefuck
-eval "$(thefuck --alias)"
-alias f="fuck"
+if command -v thefuck > /dev/null 2>&1; then
+  eval "$(thefuck --alias)"
+  alias f="fuck"
+fi
 
 # git alias
 alias glog="git log --graph --pretty=format:'%h %C(cyan)%an %Cgreen(%cr) %C(bold magenta)%d%C(reset) %n %s %n ' --first-parent "
@@ -239,23 +254,27 @@ alias wget="curl -O "
 alias browsh="docker run -it --net=host --rm browsh/browsh"
 
 # start tmux
-if [[ ! -n $TMUX && $- == *l* ]]; then
-  # get the IDs
-  ID="`tmux list-sessions`"
-  if [[ -z "$ID" ]]; then
-    tmux new-session
-  fi
-  create_new_session="Create New Session"
-  ID="$ID\n${create_new_session}:"
-  ID="`echo $ID | $PERCOL | cut -d: -f1`"
-  if [[ "$ID" = "${create_new_session}" ]]; then
-    tmux new-session
-  elif [[ -n "$ID" ]]; then
-    tmux attach-session -t "$ID"
-  else
-    :  # Start terminal normally
+if command -v tmux > /dev/null 2>&1; then
+  if [[ ! -n $TMUX && $- == *l* ]]; then
+    # get the IDs
+    ID="`tmux list-sessions`"
+    if [[ -z "$ID" ]]; then
+      tmux new-session
+    fi
+    create_new_session="Create New Session"
+    ID="$ID\n${create_new_session}:"
+    ID="`echo $ID | $PERCOL | cut -d: -f1`"
+    if [[ "$ID" = "${create_new_session}" ]]; then
+      tmux new-session
+    elif [[ -n "$ID" ]]; then
+      tmux attach-session -t "$ID"
+    else
+      :  # Start terminal normally
+    fi
   fi
 fi
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+if command -v ng > /dev/null 2>&1; then
+  source <(ng completion script)
+fi
