@@ -93,8 +93,15 @@ export PATH="$HOME/lua-5.4.6/src:$PATH"
 
 # flutter
 export PATH="$HOME/flutter/bin:$PATH"
-export CHROME_EXECUTABLE="$(which chromium)"
-export ANDROID_HOME="/home/haruyuki/Android/Sdk"
+if command -v chromium > /dev/null 2>&1; then
+  export CHROME_EXECUTABLE="$(which chromium)"
+fi
+if [ -d "/home/haruyuki/Android/Sdk" ]; then
+  export ANDROID_HOME="/home/haruyuki/Android/Sdk"
+fi
+if [ -d "/Users/haruyuki/Library/Android/sdk" ]; then
+  export ANDROID_HOME="/Users/haruyuki/Library/Android/sdk"
+fi
 
 # prompt
 # プロンプトを設定する関数
