@@ -44,6 +44,14 @@ export NVM_DIR="$HOME/.config/nvm"
 
 nvm use default > /dev/null
 
+# pnpm setting
+export PNPM_HOME="/home/haruyuki/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+alias pn="pnpm "
+
 # deno path
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
@@ -78,6 +86,11 @@ export PATH="$HOME/.mdr:$PATH"
 
 # lua
 export PATH="$HOME/lua-5.4.6/src:$PATH"
+
+# flutter
+export PATH="$HOME/flutter/bin:$PATH"
+export CHROME_EXECUTABLE="$(which chromium)"
+export ANDROID_HOME="/home/haruyuki/Android/Sdk"
 
 # prompt
 setopt Prompt_SUBST
@@ -243,8 +256,6 @@ if [[ ! -n $TMUX && $- == *l* ]]; then
     :  # Start terminal normally
   fi
 fi
-
-
 
 # Load Angular CLI autocompletion.
 source <(ng completion script)
