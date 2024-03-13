@@ -97,20 +97,35 @@ export CHROME_EXECUTABLE="$(which chromium)"
 export ANDROID_HOME="/home/haruyuki/Android/Sdk"
 
 # prompt
+# プロンプトを設定する関数
+set_prompt() {
+  local pro="%F{green}%n%f@%F{green}%m%f %F{yellow}%* %w%f %~"
+
+  # nodeコマンドが存在するかチェック
+  if command -v node > /dev/null 2>&1; then
+    pro="%F{magenta}node:$(node -v)%f
+${pro}"
+  fi
+
+  # pythonコマンドが存在するかチェック
+  if command -v python > /dev/null 2>&1; then
+    pro="%F{magenta}python:$(python --version | cut -d ' ' -f 2)%f
+${pro}"
+  fi
+
+  # gitコマンドが存在するかチェック
+  if command -v git > /dev/null 2>&1; then
+    pro="${pro} %F{blue}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)%f"
+  fi
+
+  # 最終的なプロンプトを設定
+  PROMPT="${pro}
+%F{cyan}%#%f "
+}
+
+# プロンプト設定関数をプロンプトのたびに実行するよう設定
+precmd_functions+=(set_prompt)
 setopt Prompt_SUBST
-PROMPT='
-%F{green}%n%f@%F{green}%m%f %F{yellow}%* %w%f %~%F{blue}$(nowbranch)%f
-%F{cyan}%#%f '
-if command -v node > /dev/null 2>&1; then
-  PROMPT='
-  %F{magenta}node:$(node -v)%f
-  $PROMPT'
-fi
-if command -v pyenv > /dev/null 2>&1; then
-  PROMPT='
-  %F{magenta}python:$(pyenv version-name)@~${${${$(which python3)#*$(whoami)}%shims*}%/bin*}%f
-  $PROMPT'
-fi
 TMOUT=1
 
 TRAPALRM() {
