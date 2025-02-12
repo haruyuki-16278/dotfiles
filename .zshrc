@@ -126,7 +126,8 @@ ${pro}"
   fi
 
   # 最終的なプロンプトを設定
-  PROMPT="${pro}
+  PROMPT="
+${pro}
 %F{cyan}%#%f "
 }
 
