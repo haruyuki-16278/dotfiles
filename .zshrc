@@ -61,7 +61,7 @@ export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # flutter
-export PATH="$HOME/dev/flutter/bin:$PATH"
+export PATH="$HOME/flutter/bin:$PATH"
 
 # java
 export PATH="/opt/android-studio/jre/bin:$PATH"
@@ -301,3 +301,16 @@ fi
 if command -v ng > /dev/null 2>&1; then
   source <(ng completion script)
 fi
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/haruyuki/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# pnpm
+export PNPM_HOME="/Users/haruyuki/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+. "/Users/haruyuki/.deno/env"
