@@ -49,7 +49,7 @@ if [ -d "$HOME/.nvm" ]; then
 fi
 
 # pnpm setting
-export PNPM_HOME="/home/haruyuki/.local/share/pnpm"
+export PNPM_HOME="/Users/haruyuki/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -57,11 +57,10 @@ esac
 alias pn="pnpm "
 
 # deno path
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+. "/Users/haruyuki/.deno/env"
 
 # flutter
-export PATH="$HOME/flutter/bin:$PATH"
+export PATH="$HOME/dev/flutter/bin:$PATH"
 
 # java
 export PATH="/opt/android-studio/jre/bin:$PATH"
@@ -96,8 +95,8 @@ export PATH="$HOME/flutter/bin:$PATH"
 if command -v chromium > /dev/null 2>&1; then
   export CHROME_EXECUTABLE="$(which chromium)"
 fi
-if [ -d "/home/haruyuki/Android/Sdk" ]; then
-  export ANDROID_HOME="/home/haruyuki/Android/Sdk"
+if [ -d "/Users/haruyuki/Android/Sdk" ]; then
+  export ANDROID_HOME="/Users/haruyuki/Android/Sdk"
 fi
 if [ -d "/Users/haruyuki/Library/Android/sdk" ]; then
   export ANDROID_HOME="/Users/haruyuki/Library/Android/sdk"
@@ -297,20 +296,37 @@ if command -v tmux > /dev/null 2>&1; then
   fi
 fi
 
-# Load Angular CLI autocompletion.
-if command -v ng > /dev/null 2>&1; then
-  source <(ng completion script)
-fi
+# Added by Antigravity
+export PATH="/Users/haruyuki/.antigravity/antigravity/bin:$PATH"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/haruyuki/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-# pnpm
-export PNPM_HOME="/Users/haruyuki/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-. "/Users/haruyuki/.deno/env"
+# Load Angular CLI autocompletion.
+if command -v ng > /dev/null 2>&1; then
+  source <(ng completion script)
+fi
+
+# --- Dotfiles Change Detector ---
+function check_dotfiles_status() {
+  local dotfiles_dir="$HOME/dotfiles"
+  if [ -d "$dotfiles_dir/.git" ]; then
+    # 未コミットの変更があるかチェック
+    if ! (cd "$dotfiles_dir" && git diff --quiet); then
+      print -P "\n%F{yellow}⚠️  [WARNING] .zshrc has uncommitted changes!%f"
+      print -P "%F{cyan}Run 'dotdiff' to see changes or 'dotcommit' to save them.%f\n"
+    fi
+  fi
+}
+
+# デバッグ表示をオフにする
+unsetopt xtrace
+
+# 起動時に実行
+check_dotfiles_status
+
+# 便利なエイリアス
+alias dotdiff="cd ~/dotfiles && git diff .zshrc && cd -"
+alias dotcommit="cd ~/dotfiles && git add .zshrc && echo 'Enter commit message:' && read msg && git commit -m \"\$msg\" && cd -"
+
