@@ -329,4 +329,4 @@ check_dotfiles_status
 # 便利なエイリアス
 alias dotdiff="cd ~/dotfiles && git diff .zshrc && cd -"
 alias dotcommit="cd ~/dotfiles && git add .zshrc && echo 'Enter commit message:' && read msg && git commit -m \"\$msg\" && cd -"
-
+eval "$(/Users/haruyuki/.local/bin/mise activate zsh)"
